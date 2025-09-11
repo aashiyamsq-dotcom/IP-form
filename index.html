@@ -102,13 +102,14 @@
         </div>
       </fieldset>
 
-      <!-- Geolocation Auto-Fill (Hidden fields) -->
+      <!-- Geolocation Auto-Fill -->
       <fieldset>
         <legend>Geolocation (Auto Captured)</legend>
         <input type="hidden" id="latitude" name="latitude">
         <input type="hidden" id="longitude" name="longitude">
         <input type="hidden" id="ip_address" name="ip_address">
-        <p>📍 Location & IP will be captured automatically</p>
+        <input type="hidden" id="address" name="address">
+        <p>📍 Location, IP & Address will be captured automatically</p>
       </fieldset>
 
       <div class="form-actions">
@@ -125,7 +126,7 @@
   </div>
 
   <script>
-    // Set password
+    // Password
     const FORM_PASSWORD = "mySecret123";
 
     function checkPassword() {
@@ -146,25 +147,59 @@
       dateInput.value = today;
     });
 
-    // Capture Geolocation + IP
+    // Capture GPS + Address (fallback to IP if needed)
     function captureGeolocation() {
-      // GPS
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          document.getElementById("latitude").value = pos.coords.latitude;
-          document.getElementById("longitude").value = pos.coords.longitude;
-        }, err => {
-          console.warn("Geolocation failed:", err.message);
-        });
+        navigator.geolocation.getCurrentPosition(
+          async pos => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            document.getElementById("latitude").value = lat;
+            document.getElementById("longitude").value = lon;
+
+            // Reverse geocode via BigDataCloud
+            try {
+              const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+              const data = await res.json();
+              document.getElementById("address").value =
+                `${data.city || ""}, ${data.principalSubdivision || ""}, ${data.countryName || ""}`;
+            } catch (err) {
+              console.warn("BigDataCloud failed:", err);
+            }
+          },
+          err => {
+            console.warn("Geolocation failed:", err.message);
+            fallbackToIp();
+          }
+        );
+      } else {
+        fallbackToIp();
       }
 
-      // IP (safe for GitHub Pages)
+      // Capture IP regardless
       fetch("https://api64.ipify.org?format=json")
         .then(res => res.json())
         .then(data => {
           document.getElementById("ip_address").value = data.ip;
         })
         .catch(err => console.error("IP fetch failed:", err));
+    }
+
+    // Fallback: IP-based location (ipinfo.io)
+    function fallbackToIp() {
+      fetch("https://ipinfo.io/json?token=YOUR_TOKEN_HERE")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("ip_address").value = data.ip;
+          if (data.loc) {
+            const [lat, lon] = data.loc.split(",");
+            document.getElementById("latitude").value = lat;
+            document.getElementById("longitude").value = lon;
+          }
+          document.getElementById("address").value =
+            `${data.city || ""}, ${data.region || ""}, ${data.country || ""}`;
+        })
+        .catch(err => console.error("IP fallback failed:", err));
     }
 
     // Show form again
@@ -174,7 +209,7 @@
       captureGeolocation();
     }
 
-    // Handle form submission
+    // Submit handler
     document.getElementById("employeeForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const formData = Object.fromEntries(new FormData(this).entries());
