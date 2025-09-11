@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Employee Clock Form (Protected)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      background: #f5f6fa;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    .form-container, .thankyou-box, .login-box {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 25px 30px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    h2, h1 {
+      text-align: center;
+    }
+    fieldset {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      padding: 20px;
+    }
+    legend {
+      font-weight: bold;
+      font-size: 1rem;
+      color: #444;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    input[type="text"], input[type="time"], input[type="date"], input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 0.95em;
+      box-sizing: border-box;
+    }
+    .form-actions {
+      text-align: center;
+    }
+    .form-actions button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 24px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .form-actions button:hover {
+      background: #0056b3;
+    }
+    .row {
+      display: flex;
+      gap: 25px;
+      margin-bottom: 20px;
+    }
+    .row .col {
+      flex: 1;
+    }
+    .thankyou-box {
+      display: none;
+      text-align: center;
+      margin-top: 100px;
+    }
+    .thankyou-box h1 {
+      color: #28a745;
+    }
+    .thankyou-box a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #007bff;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .thankyou-box a:hover {
+      background: #0056b3;
+    }
+    .login-box {
+      max-width: 400px;
+      margin-top: 120px;
+      text-align: center;
+    }
+</style>
+</head>
+<body>
+<!-- Password Login -->
+<div class="login-box" id="login-section">
+<h2>🔒 Enter Password</h2>
+<input type="password" id="access-password" placeholder="Enter password">
+<div class="form-actions">
+<button onclick="checkPassword()">Login</button>
+</div>
+<p id="error-msg" style="color:red; display:none;">❌ Incorrect password</p>
+</div>
+ 
+  <!-- Form Section -->
+<div class="form-container" id="form-section" style="display:none;">
+<h2>Employee Clock Form</h2>
+<form id="employeeForm">
+<!-- Employee Info -->
+<fieldset>
+<legend>Employee Information</legend>
+<label for="employee_name">Employee Name</label>
+<input type="text" id="employee_name" name="employee_name" required>
+ 
+        <label for="project_name">Project Name (Optional)</label>
+<input type="text" id="project_name" name="project_name">
+</fieldset>
+ 
+      <!-- Time Details -->
+<fieldset>
+<legend>Time Details</legend>
+<label for="date">Date</label>
+<input type="date" id="date" name="date" required>
+ 
+        <div class="row">
+<div class="col">
+<label for="clock_in">Clock In Time</label>
+<input type="time" id="clock_in" name="clock_in" required>
+</div>
+<div class="col">
+<label for="clock_out">Clock Out Time</label>
+<input type="time" id="clock_out" name="clock_out" required>
+</div>
+</div>
+</fieldset>
+ 
+      <!-- Geolocation Details -->
+<fieldset>
+<legend>Geolocation Details</legend>
+ 
+        <div class="row">
+<div class="col">
+<label for="latitude">Latitude</label>
+<input type="text" id="latitude" name="latitude" required>
+</div>
+<div class="col">
+<label for="longitude">Longitude</label>
+<input type="text" id="longitude" name="longitude" required>
+</div>
+</div>
+ 
+        <div class="row">
+<div class="col">
+<label for="country">Country</label>
+<input type="text" id="country" name="country" required>
+</div>
+<div class="col">
+<label for="city">City</label>
+<input type="text" id="city" name="city" required>
+</div>
+</div>
+ 
+        <div class="row">
+<div class="col">
+<label for="postal">Postal Code</label>
+<input type="text" id="postal" name="postal" required>
+</div>
+<div class="col">
+<label for="street">Street Address</label>
+<input type="text" id="street" name="street" required>
+</div>
+</div>
+ 
+        <label for="ip_address">IP Address</label>
+<input type="text" id="ip_address" name="ip_address" required>
+</fieldset>
+ 
+      <div class="form-actions">
+<button type="submit">Submit Form</button>
+</div>
+</form>
+</div>
+ 
+  <!-- Thank You Section -->
+<div class="thankyou-box" id="thankyou-section">
+<h1>✅ Thank You!</h1>
+<p>Your submission has been received successfully.</p>
+<a href="#" onclick="showForm()">Submit Another Response</a>
+</div>
+ 
+  <script>
+    // Set password (you can change this)
+    const FORM_PASSWORD = "mySecret123";
+ 
+    // Password check
+    function checkPassword() {
+      const entered = document.getElementById("access-password").value;
+      if (entered === FORM_PASSWORD) {
+        document.getElementById("login-section").style.display = "none";
+        document.getElementById("form-section").style.display = "block";
+      } else {
+        document.getElementById("error-msg").style.display = "block";
+      }
+    }
+ 
+    // Prefill today's date
+    document.addEventListener("DOMContentLoaded", function() {
+      const dateInput = document.getElementById("date");
+      const today = new Date().toISOString().split("T")[0];
+      dateInput.value = today;
+    });
+ 
+    // Show form again
+    function showForm() {
+      document.getElementById("thankyou-section").style.display = "none";
+      document.getElementById("form-section").style.display = "block";
+    }
+ 
+    // Handle form submission
+    document.getElementById("employeeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = Object.fromEntries(new FormData(this).entries());
+ 
+      fetch("https://hook.eu1.make.com/4umyy6v8n9t3c8iqikliwufee6n5lifp", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(formData)
+      })
+      .then(res => {
+        if (res.ok) {
+          document.getElementById("form-section").style.display = "none";
+          document.getElementById("thankyou-section").style.display = "block";
+          this.reset();
+          const today = new Date().toISOString().split("T")[0];
+          document.getElementById("date").value = today;
+        } else {
+          alert("Error submitting form.");
+        }
+      })
+      .catch(err => alert("Request failed: " + err.message));
+    });
+</script>
+</body>
+</html>
