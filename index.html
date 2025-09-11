@@ -34,7 +34,7 @@
       color: #444;
     }
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; }
-    input[type="text"], input[type="time"], input[type="date"], input[type="password"] {
+    input[type="text"], input[type="time"], input[type="date"], input[type="password"], select {
       width: 100%; padding: 10px 12px; border: 1px solid #ccc;
       border-radius: 4px; margin-bottom: 20px; font-size: 0.95em;
       box-sizing: border-box;
@@ -59,6 +59,8 @@
     }
     .thankyou-box a:hover { background: #0056b3; }
     .login-box { max-width: 400px; margin-top: 120px; text-align: center; }
+    /* Hide geolocation fieldset */
+    #geolocation-fieldset { display: none; }
   </style>
 </head>
 <body>
@@ -80,9 +82,20 @@
       <fieldset>
         <legend>Employee Information</legend>
         <label for="employee_name">Employee Name</label>
-        <input type="text" id="employee_name" name="employee_name" required>
+        <select id="employee_name" name="employee_name" required>
+          <option value="">-- Select Employee --</option>
+          <option value="John Doe">John Doe</option>
+          <option value="Jane Smith">Jane Smith</option>
+          <option value="Alex Brown">Alex Brown</option>
+        </select>
+
         <label for="project_name">Project Name (Optional)</label>
-        <input type="text" id="project_name" name="project_name">
+        <select id="project_name" name="project_name">
+          <option value="">-- Select Project --</option>
+          <option value="Website Redesign">Website Redesign</option>
+          <option value="Mobile App">Mobile App</option>
+          <option value="Marketing Campaign">Marketing Campaign</option>
+        </select>
       </fieldset>
 
       <!-- Time Details -->
@@ -95,15 +108,11 @@
             <label for="clock_in">Clock In Time</label>
             <input type="time" id="clock_in" name="clock_in" required>
           </div>
-          <div class="col">
-            <label for="clock_out">Clock Out Time</label>
-            <input type="time" id="clock_out" name="clock_out" required>
-          </div>
         </div>
       </fieldset>
 
-      <!-- Geolocation Auto-Fill -->
-      <fieldset>
+      <!-- Geolocation Auto-Fill (hidden but functional) -->
+      <fieldset id="geolocation-fieldset">
         <legend>Geolocation (Auto Captured)</legend>
         <input type="hidden" id="latitude" name="latitude">
         <input type="hidden" id="longitude" name="longitude">
