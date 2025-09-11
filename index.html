@@ -107,12 +107,8 @@
         <legend>Geolocation (Auto Captured)</legend>
         <input type="hidden" id="latitude" name="latitude">
         <input type="hidden" id="longitude" name="longitude">
-        <input type="hidden" id="country" name="country">
-        <input type="hidden" id="city" name="city">
-        <input type="hidden" id="postal" name="postal">
-        <input type="hidden" id="street" name="street">
         <input type="hidden" id="ip_address" name="ip_address">
-        <p>📍 Location will be captured automatically</p>
+        <p>📍 Location & IP will be captured automatically</p>
       </fieldset>
 
       <div class="form-actions">
@@ -152,22 +148,21 @@
 
     // Capture Geolocation + IP
     function captureGeolocation() {
+      // GPS
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(pos => {
           document.getElementById("latitude").value = pos.coords.latitude;
           document.getElementById("longitude").value = pos.coords.longitude;
+        }, err => {
+          console.warn("Geolocation failed:", err.message);
         });
       }
 
-      // Fetch IP and location data
-      fetch("https://ipapi.co/json/")
+      // IP (safe for GitHub Pages)
+      fetch("https://api64.ipify.org?format=json")
         .then(res => res.json())
         .then(data => {
           document.getElementById("ip_address").value = data.ip;
-          document.getElementById("country").value = data.country_name;
-          document.getElementById("city").value = data.city;
-          document.getElementById("postal").value = data.postal;
-          document.getElementById("street").value = data.org || "N/A"; // street not always available
         })
         .catch(err => console.error("IP fetch failed:", err));
     }
