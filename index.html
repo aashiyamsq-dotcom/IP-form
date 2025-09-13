@@ -5,248 +5,247 @@
 <title>Employee Clock Form (Protected)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-    body {
-      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-      background: #f5f6fa;
-      margin: 0;
-      padding: 20px;
-      color: #333;
-    }
-    .form-container, .thankyou-box, .login-box {
-      max-width: 900px;
-      margin: auto;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 25px 30px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    }
-    h2, h1 { text-align: center; }
-    fieldset {
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      margin-bottom: 20px;
-      padding: 20px;
-    }
-    legend {
-      font-weight: bold;
-      font-size: 1rem;
-      color: #444;
-    }
-    label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; }
-    input[type="text"], input[type="time"], input[type="date"], input[type="password"],
-    select {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-bottom: 20px;
-      font-size: 0.95em;
-      box-sizing: border-box;
-      background-color: #fff;
-      appearance: none; /* removes browser default styles */
-    }
-    .form-actions { text-align: center; }
-    .form-actions button {
-      background: #007bff; color: #fff; border: none;
-      border-radius: 6px; padding: 10px 24px;
-      font-size: 1em; cursor: pointer;
-    }
-    .form-actions button:hover { background: #0056b3; }
-    .row { display: flex; gap: 25px; margin-bottom: 20px; }
-    .row .col { flex: 1; }
-    .thankyou-box {
-      display: none; text-align: center; margin-top: 100px;
-    }
-    .thankyou-box h1 { color: #28a745; }
-    .thankyou-box a {
-      display: inline-block; margin-top: 20px;
-      padding: 10px 20px; background: #007bff;
-      color: #fff; border-radius: 6px; text-decoration: none;
-    }
-    .thankyou-box a:hover { background: #0056b3; }
-    .login-box { max-width: 400px; margin-top: 120px; text-align: center; }
+  body {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #f5f6fa;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+  }
+  .form-container, .thankyou-box, .login-box {
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 25px 30px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  h2, h1 { text-align: center; }
+  fieldset {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+  legend {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #444;
+  }
+  label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; }
+  input[type="text"], input[type="time"], input[type="date"], input[type="password"],
+  select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+    background-color: #fff;
+    appearance: none;
+  }
+  .form-actions { text-align: center; }
+  .form-actions button {
+    background: #007bff; color: #fff; border: none;
+    border-radius: 6px; padding: 10px 24px;
+    font-size: 1em; cursor: pointer;
+  }
+  .form-actions button:hover { background: #0056b3; }
+  .thankyou-box {
+    display: none; text-align: center; margin-top: 100px;
+  }
+  .thankyou-box h1 { color: #28a745; }
+  .thankyou-box a {
+    display: inline-block; margin-top: 20px;
+    padding: 10px 20px; background: #007bff;
+    color: #fff; border-radius: 6px; text-decoration: none;
+  }
+  .thankyou-box a:hover { background: #0056b3; }
+  .login-box { max-width: 400px; margin-top: 120px; text-align: center; }
 </style>
 </head>
 <body>
+
 <!-- Password Login -->
 <div class="login-box" id="login-section">
-<h2>🔒 Enter Password</h2>
-<input type="password" id="access-password" placeholder="Enter password">
-<div class="form-actions">
-<button onclick="checkPassword()">Login</button>
+  <h2>🔒 Enter Password</h2>
+  <input type="password" id="access-password" placeholder="Enter password">
+  <div class="form-actions">
+    <button onclick="checkPassword()">Login</button>
+  </div>
+  <p id="error-msg" style="color:red; display:none;">❌ Incorrect password</p>
 </div>
-<p id="error-msg" style="color:red; display:none;">❌ Incorrect password</p>
-</div>
- 
+
 <!-- Form Section -->
 <div class="form-container" id="form-section" style="display:none;">
-<h2>Staff Clock In</h2>
-<form id="employeeForm">
-<!-- Employee Info -->
-<fieldset>
-<legend>Employee Information</legend>
-<label for="employee_name">Employee Name</label>
-<select id="employee_name" name="employee_name" required>
-<option value="">Select Employee</option>
-<option>Junior</option>
-<option>Yorman</option>
-<option>Julio</option>
-<option>Eddy</option>
-<option>Yordano</option>
-<option>Joel</option>
-<option>Yendry</option>
-<option>Chicote</option>
-</select>
- 
-<label for="project_name">Project Name</label>
-<select id="project_name" name="project_name">
-<option value="">Select Project</option>
-<option>Golan</option>
-<option>Iliat</option>
-<option>Bucare</option>
-<option>Jensen Guest House</option>
-<option>Bolona Pool</option>
-<option>Iliat Pool</option>
-<option>Hibiscus</option>
-<option>Jensen Paver Extension</option>
-<option>Jensen Misc</option>
-</select>
-</fieldset>
- 
-<!-- Time Details -->
-<fieldset>
-<legend>Time Details</legend>
-<label for="date">Date</label>
-<input type="date" id="date" name="date" required>
- 
-<label for="clock_in">Clock In Time</label>
-<input type="time" id="clock_in" name="clock_in" required>
-</fieldset>
- 
-<!-- Geolocation Auto-Fill (completely hidden) -->
-<input type="hidden" id="latitude" name="latitude">
-<input type="hidden" id="longitude" name="longitude">
-<input type="hidden" id="ip_address" name="ip_address">
-<input type="hidden" id="address" name="address">
- 
-<div class="form-actions">
-<button type="submit">Submit Form</button>
+  <h2>Staff Clock In</h2>
+  <form id="employeeForm">
+    <!-- Employee Info -->
+    <fieldset>
+      <legend>Employee Information</legend>
+      <label for="employee_name">Employee Name</label>
+      <select id="employee_name" name="employee_name" required>
+        <option value="">Select Employee</option>
+        <option>Junior</option>
+        <option>Yorman</option>
+        <option>Julio</option>
+        <option>Eddy</option>
+        <option>Yordano</option>
+        <option>Joel</option>
+        <option>Yendry</option>
+        <option>Chicote</option>
+      </select>
+
+      <label for="project_name">Project Name</label>
+      <select id="project_name" name="project_name">
+        <option value="">Select Project</option>
+        <option>Golan</option>
+        <option>Iliat</option>
+        <option>Bucare</option>
+        <option>Jensen Guest House</option>
+        <option>Bolona Pool</option>
+        <option>Iliat Pool</option>
+        <option>Hibiscus</option>
+        <option>Jensen Paver Extension</option>
+        <option>Jensen Misc</option>
+      </select>
+    </fieldset>
+
+    <!-- Time Details -->
+    <fieldset>
+      <legend>Time Details</legend>
+      <label for="date">Date</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="clock_in">Clock In Time</label>
+      <input type="time" id="clock_in" name="clock_in" required>
+    </fieldset>
+
+    <!-- Hidden Geolocation Fields -->
+    <input type="hidden" id="latitude" name="latitude">
+    <input type="hidden" id="longitude" name="longitude">
+    <input type="hidden" id="ip_address" name="ip_address">
+    <input type="hidden" id="address" name="address">
+
+    <div class="form-actions">
+      <button type="submit">Submit Form</button>
+    </div>
+  </form>
 </div>
-</form>
-</div>
- 
+
 <!-- Thank You Section -->
 <div class="thankyou-box" id="thankyou-section">
-<h1>✅ Thank You!</h1>
-<p>Your submission has been received successfully.</p>
-<a href="#" onclick="showForm()">Submit Another Response</a>
+  <h1>✅ Thank You!</h1>
+  <p>Your submission has been received successfully.</p>
+  <a href="#" onclick="showForm()">Submit Another Response</a>
 </div>
- 
+
 <script>
-    // Password
-    const FORM_PASSWORD = "mySecret123";
-    function checkPassword() {
-      const entered = document.getElementById("access-password").value;
-      if (entered === FORM_PASSWORD) {
-        document.getElementById("login-section").style.display = "none";
-        document.getElementById("form-section").style.display = "block";
-        captureGeolocation();
-      } else {
-        document.getElementById("error-msg").style.display = "block";
-      }
-    }
- 
-    // Prefill today's date
-    document.addEventListener("DOMContentLoaded", function() {
-      const dateInput = document.getElementById("date");
-      const today = new Date().toISOString().split("T")[0];
-      dateInput.value = today;
-    });
- 
-    // Capture GPS + Address (fallback to IP if needed)
-    function captureGeolocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          async pos => {
-            const lat = pos.coords.latitude;
-            const lon = pos.coords.longitude;
-            document.getElementById("latitude").value = lat;
-            document.getElementById("longitude").value = lon;
-            // Reverse geocode via BigDataCloud
-            try {
-              const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&l…
-              const data = await res.json();
-              document.getElementById("address").value =
-                `${data.city || ""}, ${data.principalSubdivision || ""}, ${data.countryName || ""}`;
-            } catch (err) {
-              console.warn("BigDataCloud failed:", err);
-            }
-          },
-          err => {
-            console.warn("Geolocation failed:", err.message);
-            fallbackToIp();
-          }
-        );
-      } else {
-        fallbackToIp();
-      }
- 
-      // Capture IP regardless
-      fetch("https://api64.ipify.org?format=json")
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById("ip_address").value = data.ip;
-        })
-        .catch(err => console.error("IP fetch failed:", err));
-    }
- 
-    // Fallback: IP-based location (ipinfo.io)
-    function fallbackToIp() {
-      fetch("https://ipinfo.io/json?token=YOUR_TOKEN_HERE")
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById("ip_address").value = data.ip;
-          if (data.loc) {
-            const [lat, lon] = data.loc.split(",");
-            document.getElementById("latitude").value = lat;
-            document.getElementById("longitude").value = lon;
-          }
-          document.getElementById("address").value =
-            `${data.city || ""}, ${data.region || ""}, ${data.country || ""}`;
-        })
-        .catch(err => console.error("IP fallback failed:", err));
-    }
- 
-    // Show form again
-    function showForm() {
-      document.getElementById("thankyou-section").style.display = "none";
+  // Password
+  const FORM_PASSWORD = "mySecret123";
+  function checkPassword() {
+    const entered = document.getElementById("access-password").value;
+    if (entered === FORM_PASSWORD) {
+      document.getElementById("login-section").style.display = "none";
       document.getElementById("form-section").style.display = "block";
       captureGeolocation();
+    } else {
+      document.getElementById("error-msg").style.display = "block";
     }
- 
-    // Submit handler
-    document.getElementById("employeeForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const formData = Object.fromEntries(new FormData(this).entries());
-      fetch("https://hook.eu1.make.com/4umyy6v8n9t3c8iqikliwufee6n5lifp", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(formData)
-      })
-      .then(res => {
-        if (res.ok) {
-          document.getElementById("form-section").style.display = "none";
-          document.getElementById("thankyou-section").style.display = "block";
-          this.reset();
-          const today = new Date().toISOString().split("T")[0];
-          document.getElementById("date").value = today;
-        } else {
-          alert("Error submitting form.");
+  }
+
+  // Prefill today's date
+  document.addEventListener("DOMContentLoaded", function() {
+    const dateInput = document.getElementById("date");
+    const today = new Date().toISOString().split("T")[0];
+    dateInput.value = today;
+  });
+
+  // Capture GPS + Address
+  function captureGeolocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async pos => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          document.getElementById("latitude").value = lat;
+          document.getElementById("longitude").value = lon;
+          try {
+            const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+            const data = await res.json();
+            document.getElementById("address").value =
+              `${data.city || ""}, ${data.principalSubdivision || ""}, ${data.countryName || ""}`;
+          } catch (err) {
+            console.warn("BigDataCloud failed:", err);
+          }
+        },
+        err => {
+          console.warn("Geolocation failed:", err.message);
+          fallbackToIp();
         }
+      );
+    } else {
+      fallbackToIp();
+    }
+
+    // Capture IP
+    fetch("https://api64.ipify.org?format=json")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("ip_address").value = data.ip;
       })
-      .catch(err => alert("Request failed: " + err.message));
-    });
+      .catch(err => console.error("IP fetch failed:", err));
+  }
+
+  // Fallback: IP-based location
+  function fallbackToIp() {
+    fetch("https://ipinfo.io/json")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("ip_address").value = data.ip;
+        if (data.loc) {
+          const [lat, lon] = data.loc.split(",");
+          document.getElementById("latitude").value = lat;
+          document.getElementById("longitude").value = lon;
+        }
+        document.getElementById("address").value =
+          `${data.city || ""}, ${data.region || ""}, ${data.country || ""}`;
+      })
+      .catch(err => console.error("IP fallback failed:", err));
+  }
+
+  // Show form again
+  function showForm() {
+    document.getElementById("thankyou-section").style.display = "none";
+    document.getElementById("form-section").style.display = "block";
+    captureGeolocation();
+  }
+
+  // Submit handler
+  document.getElementById("employeeForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const formEl = this;
+    const formData = Object.fromEntries(new FormData(formEl).entries());
+    fetch("https://hook.eu1.make.com/4umyy6v8n9t3c8iqikliwufee6n5lifp", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(formData)
+    })
+    .then(res => {
+      if (res.ok) {
+        document.getElementById("form-section").style.display = "none";
+        document.getElementById("thankyou-section").style.display = "block";
+        formEl.reset();
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("date").value = today;
+      } else {
+        alert("Error submitting form.");
+      }
+    })
+    .catch(err => alert("Request failed: " + err.message));
+  });
 </script>
 </body>
 </html>
