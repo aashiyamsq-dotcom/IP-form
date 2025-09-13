@@ -34,10 +34,17 @@
       color: #444;
     }
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; }
-    input[type="text"], input[type="time"], input[type="date"], input[type="password"] {
-      width: 100%; padding: 10px 12px; border: 1px solid #ccc;
-      border-radius: 4px; margin-bottom: 20px; font-size: 0.95em;
+    input[type="text"], input[type="time"], input[type="date"], input[type="password"],
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 0.95em;
       box-sizing: border-box;
+      background-color: #fff;
+      appearance: none; /* removes browser default styles */
     }
     .form-actions { text-align: center; }
     .form-actions button {
@@ -72,63 +79,73 @@
 <p id="error-msg" style="color:red; display:none;">❌ Incorrect password</p>
 </div>
  
-  <!-- Form Section -->
+<!-- Form Section -->
 <div class="form-container" id="form-section" style="display:none;">
-<h2>Employee Clock Form</h2>
+<h2>Staff Clock In</h2>
 <form id="employeeForm">
 <!-- Employee Info -->
 <fieldset>
 <legend>Employee Information</legend>
 <label for="employee_name">Employee Name</label>
-<input type="text" id="employee_name" name="employee_name" required>
-<label for="project_name">Project Name (Optional)</label>
-<input type="text" id="project_name" name="project_name">
+<select id="employee_name" name="employee_name" required>
+<option value="">Select Employee</option>
+<option>Junior</option>
+<option>Yorman</option>
+<option>Julio</option>
+<option>Eddy</option>
+<option>Yordano</option>
+<option>Joel</option>
+<option>Yendry</option>
+<option>Chicote</option>
+</select>
+ 
+<label for="project_name">Project Name</label>
+<select id="project_name" name="project_name">
+<option value="">Select Project</option>
+<option>Golan</option>
+<option>Iliat</option>
+<option>Bucare</option>
+<option>Jensen Guest House</option>
+<option>Bolona Pool</option>
+<option>Iliat Pool</option>
+<option>Hibiscus</option>
+<option>Jensen Paver Extension</option>
+<option>Jensen Misc</option>
+</select>
 </fieldset>
  
-      <!-- Time Details -->
+<!-- Time Details -->
 <fieldset>
 <legend>Time Details</legend>
 <label for="date">Date</label>
 <input type="date" id="date" name="date" required>
-<div class="row">
-<div class="col">
+ 
 <label for="clock_in">Clock In Time</label>
 <input type="time" id="clock_in" name="clock_in" required>
-</div>
-<div class="col">
-<label for="clock_out">Clock Out Time</label>
-<input type="time" id="clock_out" name="clock_out" required>
-</div>
-</div>
 </fieldset>
  
-      <!-- Geolocation Auto-Fill -->
-<fieldset>
-<legend>Geolocation (Auto Captured)</legend>
+<!-- Geolocation Auto-Fill (completely hidden) -->
 <input type="hidden" id="latitude" name="latitude">
 <input type="hidden" id="longitude" name="longitude">
 <input type="hidden" id="ip_address" name="ip_address">
 <input type="hidden" id="address" name="address">
-<p>📍 Location, IP & Address will be captured automatically</p>
-</fieldset>
  
-      <div class="form-actions">
+<div class="form-actions">
 <button type="submit">Submit Form</button>
 </div>
 </form>
 </div>
  
-  <!-- Thank You Section -->
+<!-- Thank You Section -->
 <div class="thankyou-box" id="thankyou-section">
 <h1>✅ Thank You!</h1>
 <p>Your submission has been received successfully.</p>
 <a href="#" onclick="showForm()">Submit Another Response</a>
 </div>
  
-  <script>
+<script>
     // Password
     const FORM_PASSWORD = "mySecret123";
- 
     function checkPassword() {
       const entered = document.getElementById("access-password").value;
       if (entered === FORM_PASSWORD) {
@@ -156,7 +173,6 @@
             const lon = pos.coords.longitude;
             document.getElementById("latitude").value = lat;
             document.getElementById("longitude").value = lon;
- 
             // Reverse geocode via BigDataCloud
             try {
               const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&l…
@@ -213,7 +229,6 @@
     document.getElementById("employeeForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const formData = Object.fromEntries(new FormData(this).entries());
- 
       fetch("https://hook.eu1.make.com/4umyy6v8n9t3c8iqikliwufee6n5lifp", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
